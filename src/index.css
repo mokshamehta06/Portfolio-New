@@ -124,8 +124,16 @@ body {
   box-shadow: 0 15px 35px rgba(255, 0, 79, 0.35);
 }
 
-.service-card:hover * {
-  color: #fff !important;
+.service-card:hover h3,
+.service-card:hover p,
+.service-card:hover svg {
+  color: #fff;
+}
+
+.service-card:hover .skill-chip {
+  background-color: #ffffff !important;
+  color: #ff004f !important;
+  font-weight: 600;
 }
 
 /* ── Project / Work Layer Overlay Effect ── */

@@ -90,7 +90,7 @@ export default function Skills() {
                 {category.skills.map((skill, sIdx) => (
                   <span
                     key={sIdx}
-                    className="text-xs px-2.5 py-1 rounded bg-black/40 text-white/90 font-medium group-hover:bg-white group-hover:text-[#ff004f] transition-colors"
+                    className="skill-chip text-xs px-2.5 py-1 rounded bg-black/40 text-white/90 font-medium transition-all"
                   >
                     {skill}
                   </span>
