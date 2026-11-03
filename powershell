@@ -1,1 +1,4 @@
-passthrough
+#!/usr/bin/env pwsh
+# Passthrough - delete me
+$realPS = "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe"
+& $realPS $args
