@@ -14,7 +14,7 @@ function HeroCard() {
   return (
     <div className="hero-card relative rounded-2xl overflow-hidden bg-[#161616] border-2 border-[#ff0055]/50 max-w-[340px] sm:max-w-[380px] shadow-2xl">
       <img
-        src="/moksha.jpg"
+        src="/image.png"
         alt="Moksha Mehta"
         className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700 block"
       />

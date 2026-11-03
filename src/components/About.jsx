@@ -46,7 +46,7 @@ export default function About() {
             <div className="relative group">
               <div className="absolute -inset-1 rounded-2xl bg-[#ff004f]/30 blur-lg group-hover:bg-[#ff004f]/60 transition-all duration-500" />
               <img
-                src="/image.jpg"
+                src="/image.png"
                 alt="Moksha Mehta"
                 className="relative w-full rounded-2xl object-cover shadow-2xl border border-white/10 group-hover:border-[#ff004f]/60 transition-all duration-300"
               />
