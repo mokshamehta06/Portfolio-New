@@ -26,7 +26,7 @@ const PROJECTS = [
   {
     title: "VoiceWeb – AI Voice Assistant",
     tagline: "Embeddable website voice copilot powered by Gemini & MCP",
-    image: "https://images.unsplash.com/photo-1589254065878-42c9da997008?q=80&w=900&auto=format&fit=crop",
+    image: "/voiceassistant-preview.jpg",
     problem: "Static websites lack intuitive conversational navigation and assistive automation.",
     solution: "Shadow DOM-isolated voice widget leveraging Gemini AI and MCP for autonomous page interaction.",
     features: [
@@ -38,7 +38,7 @@ const PROJECTS = [
     ],
     tech: ["JavaScript", "Gemini AI", "MCP", "Web Speech API", "Node.js"],
     github: "https://github.com",
-    demo: null,
+    demo: "https://embedded-voice-assistant-mokshamehtas-projects.vercel.app",
   },
   {
     title: "CivicSolve – Complaint Management",
@@ -151,13 +151,26 @@ export default function Projects() {
                   >
                     <Github size={22} />
                   </a>
-                  <button
-                    onClick={() => setSelectedProject(project)}
-                    className="circle-link"
-                    title="Read Project Architecture Details"
-                  >
-                    <ExternalLink size={22} />
-                  </button>
+                  {project.demo && (
+                    <a
+                      href={project.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="circle-link"
+                      title="Live Demo"
+                    >
+                      <ExternalLink size={22} />
+                    </a>
+                  )}
+                  {!project.demo && (
+                    <button
+                      onClick={() => setSelectedProject(project)}
+                      className="circle-link"
+                      title="Read Project Architecture Details"
+                    >
+                      <ExternalLink size={22} />
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

@@ -69,10 +69,10 @@ export default function Contact() {
               <div className="flex items-center gap-4">
                 <Mail className="text-[#ff004f] w-6 h-6 flex-shrink-0" />
                 <a
-                  href="mailto:moksha.mehta.dev@gmail.com"
+                  href="mailto:mokshamehta230626@acropolis.in"
                   className="hover:text-[#ff004f] transition-colors"
                 >
-                  moksha.mehta.dev@gmail.com
+                  mokshamehta230626@acropolis.in
                 </a>
               </div>
 
