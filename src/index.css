@@ -1,0 +1,295 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #080808;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: #ff004f;
+  color: #ffffff;
+}
+
+/* ── Custom Scrollbar ── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #080808;
+}
+::-webkit-scrollbar-thumb {
+  background: #ff004f;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ff3377;
+}
+
+/* ── Container ── */
+.container {
+  padding: 10px 8%;
+  max-width: 1350px;
+  margin: 0 auto;
+}
+
+/* ── Navigation Links Hover Line ── */
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s;
+}
+
+.nav-link::after {
+  content: '';
+  width: 0;
+  height: 3px;
+  background: #ff004f;
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  transition: 0.4s ease;
+  border-radius: 2px;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #ff004f;
+}
+
+/* ── Tab Links Underline ── */
+.tab-links {
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  color: #ababab;
+  transition: color 0.3s;
+}
+
+.tab-links::after {
+  content: '';
+  width: 0;
+  height: 3px;
+  background: #ff004f;
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  transition: 0.4s ease;
+  border-radius: 2px;
+}
+
+.tab-links.active-link {
+  color: #fff;
+}
+
+.tab-links.active-link::after {
+  width: 60%;
+}
+
+/* ── Services / Skills Cards ── */
+.service-card {
+  background-color: #1a1a1a;
+  padding: 35px 30px;
+  border-radius: 12px;
+  transition: background 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.service-card:hover {
+  background-color: #ff004f;
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(255, 0, 79, 0.35);
+}
+
+.service-card:hover * {
+  color: #fff !important;
+}
+
+/* ── Project / Work Layer Overlay Effect ── */
+.work {
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+  background-color: #161616;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.work img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.work .layer {
+  width: 100%;
+  height: 0;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), #ff004f);
+  border-radius: 14px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 35px;
+  text-align: center;
+  font-size: 14px;
+  transition: height 0.5s ease;
+}
+
+.work:hover img {
+  transform: scale(1.1);
+}
+
+.work:hover .layer {
+  height: 100%;
+}
+
+.layer a.circle-link {
+  margin-top: 18px;
+  color: #ff004f;
+  text-decoration: none;
+  font-size: 20px;
+  line-height: 52px;
+  background: #ffffff;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s, background 0.3s, color 0.3s;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.layer a.circle-link:hover {
+  transform: scale(1.15) rotate(15deg);
+  background: #080808;
+  color: #ff004f;
+}
+
+/* ── Signature Hot Pink Button ── */
+.btn-pink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid #ff004f;
+  padding: 13px 36px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-pink:hover {
+  background: #ff004f;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(255, 0, 79, 0.4);
+}
+
+.btn-pink.filled {
+  background: #ff004f;
+  box-shadow: 0 8px 20px rgba(255, 0, 79, 0.3);
+}
+
+.btn-pink.filled:hover {
+  background: #e60046;
+  box-shadow: 0 12px 28px rgba(255, 0, 79, 0.5);
+}
+
+/* ── Contact Inputs ── */
+.contact-input {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  outline: none;
+  background: #262626;
+  padding: 16px 20px;
+  margin: 12px 0;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 8px;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.contact-input:focus {
+  border-color: #ff004f;
+  background: #2a2a2a;
+}
+
+/* ── Neon Glow Text ── */
+.text-hotpink {
+  color: #ff004f;
+}
+
+.glow-pink {
+  text-shadow: 0 0 20px rgba(255, 0, 79, 0.6);
+}
+
+/* ── Floating Animation ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* ── Subtle Pulsing Background Glow ── */
+.bg-glow-orb {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(255, 0, 79, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(80px);
+}
+
+/* ── Requested Glow Animation & Text Pink ── */
+.text-pink {
+  color: #ff0055;
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(255,0,85,.4); }
+  50% { box-shadow: 0 0 45px rgba(255,0,85,.8); }
+}
+
+.hero-card {
+  animation: glow 3s infinite;
+}
+
