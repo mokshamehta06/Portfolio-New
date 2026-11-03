@@ -12,12 +12,21 @@ const ROLES = [
 
 function HeroCard() {
   return (
-    <div className="hero-card relative rounded-2xl overflow-hidden bg-[#161616] border-2 border-[#ff0055]/50 max-w-[340px] sm:max-w-[380px] shadow-2xl">
-      <img
-        src="/image.png"
-        alt="Moksha Mehta"
-        className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700 block"
-      />
+    <div className="hero-card relative rounded-2xl overflow-hidden bg-[#161616] border-2 border-[#ff0055]/50 w-[300px] sm:w-[350px] shadow-2xl">
+      <div className="relative w-full h-[430px] sm:h-[480px] overflow-hidden bg-[#161616]">
+        <img
+          src="/image.png"
+          alt="Moksha Mehta"
+          className="absolute h-[132%] max-w-none transition-transform duration-700 hover:scale-105 block"
+          style={{
+            left: "-14%",
+            top: "-12%",
+            width: "295%",
+            objectFit: "contain",
+            objectPosition: "left top",
+          }}
+        />
+      </div>
 
       {/* Bottom gradient bar overlay */}
       <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black via-black/90 to-transparent">
@@ -159,7 +168,7 @@ export default function Hero() {
             </span>
             <div className="w-10 h-px bg-white/20" />
             <a
-              href="https://github.com"
+              href="https://github.com/mokshamehta06"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
@@ -168,7 +177,7 @@ export default function Hero() {
               <Github size={22} />
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/moksha-mehta-9b55262b9/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"

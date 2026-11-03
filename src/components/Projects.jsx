@@ -20,7 +20,7 @@ const PROJECTS = [
       "Automated Booking Confirmation",
     ],
     tech: ["React.js", "Node.js", "Express.js", "MongoDB", "REST APIs"],
-    github: "https://github.com",
+    github: "https://github.com/mokshamehta06",
     demo: null,
   },
   {
@@ -37,7 +37,7 @@ const PROJECTS = [
       "Page Understanding & Action Execution",
     ],
     tech: ["JavaScript", "Gemini AI", "MCP", "Web Speech API", "Node.js"],
-    github: "https://github.com",
+    github: "https://github.com/mokshamehta06",
     demo: "https://embedded-voice-assistant-mokshamehtas-projects.vercel.app",
   },
   {
@@ -54,7 +54,7 @@ const PROJECTS = [
       "Administrative Oversight Dashboard",
     ],
     tech: ["React.js", "Node.js", "Express.js", "MongoDB", "Cloudinary"],
-    github: "https://github.com",
+    github: "https://github.com/mokshamehta06",
     demo: null,
   },
   {
@@ -71,7 +71,7 @@ const PROJECTS = [
       "Citizen & Agency Dashboards",
     ],
     tech: ["React.js", "Node.js", "Express.js", "MongoDB", "Tailwind CSS"],
-    github: "https://github.com",
+    github: "https://github.com/mokshamehta06",
     demo: "https://hackwave-3-0-blond.vercel.app/",
   },
 ];

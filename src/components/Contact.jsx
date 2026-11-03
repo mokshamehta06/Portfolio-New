@@ -92,7 +92,7 @@ export default function Contact() {
             {/* Social Icons (User's .social-icons style) */}
             <div className="flex items-center gap-5 mt-8">
               <a
-                href="https://github.com"
+                href="https://github.com/mokshamehta06"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub profile"
@@ -101,7 +101,7 @@ export default function Contact() {
                 <Github size={20} />
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/moksha-mehta-9b55262b9/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn profile"

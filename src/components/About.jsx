@@ -45,11 +45,20 @@ export default function About() {
           <div className="about-col-1 w-full lg:w-[38%] flex-shrink-0">
             <div className="relative group">
               <div className="absolute -inset-1 rounded-2xl bg-[#ff004f]/30 blur-lg group-hover:bg-[#ff004f]/60 transition-all duration-500" />
-              <img
-                src="/image.png"
-                alt="Moksha Mehta"
-                className="relative w-full rounded-2xl object-cover shadow-2xl border border-white/10 group-hover:border-[#ff004f]/60 transition-all duration-300"
-              />
+              <div className="relative w-full h-[450px] sm:h-[500px] rounded-2xl overflow-hidden bg-[#161616] border border-white/10 group-hover:border-[#ff004f]/60 transition-all duration-300 shadow-2xl">
+                <img
+                  src="/image.png"
+                  alt="Moksha Mehta"
+                  className="absolute h-[132%] max-w-none transition-transform duration-700 group-hover:scale-105 block"
+                  style={{
+                    left: "-14%",
+                    top: "-12%",
+                    width: "295%",
+                    objectFit: "contain",
+                    objectPosition: "left top",
+                  }}
+                />
+              </div>
             </div>
           </div>
 
