@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Github, Linkedin, ArrowDown, Download } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -47,6 +47,7 @@ function HeroCard() {
 }
 
 export default function Hero({ isReady = true }) {
+  const reduceMotion = useReducedMotion();
   const [roleText, setRoleText] = useState("");
   const [roleIdx, setRoleIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
@@ -215,8 +216,8 @@ export default function Hero({ isReady = true }) {
         {/* Right Column: Requested Floating Card */}
         <div className="lg:col-span-5 flex justify-center lg:justify-end">
           <motion.div
-            animate={{ y: [0, -15, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            animate={reduceMotion ? undefined : { y: [0, -8, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             className="relative"
           >
             <HeroCard />

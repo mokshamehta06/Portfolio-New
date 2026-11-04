@@ -1,8 +1,7 @@
-import { useRef, useState } from "react";
-import { ExternalLink, Github, Sparkles, Layers, Layers3, List } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Github, Layers3, List, X } from "lucide-react";
 import ProjectRowList from "./ProjectRowList";
-import StackedProjectCards from "./StackedProjectCards";
-import useCardGridReveal from "../hooks/useCardGridReveal";
+import ProjectCards from "./ProjectCards";
 
 const PROJECTS = [
   {
@@ -25,7 +24,7 @@ const PROJECTS = [
   {
     title: "VoiceWeb – AI Voice Assistant",
     tagline: "Embeddable website voice copilot powered by Gemini & MCP",
-    image: "/voiceassistant-preview.jpg",
+    image: "/voiceassistant-preview.svg",
     problem: "Static websites lack intuitive conversational navigation and assistive automation.",
     solution: "Shadow DOM-isolated voice widget leveraging Gemini AI and MCP for autonomous page interaction.",
     features: [
@@ -78,10 +77,16 @@ const PROJECTS = [
 export default function Projects() {
   const sectionRef = useRef(null);
   const [selectedProject, setSelectedProject] = useState(null);
-  const [viewMode, setViewMode] = useState("stack"); // "stack" or "rows"
+  const [viewMode, setViewMode] = useState("stack");
 
-  // 60fps Scroll Reveal: start at y:60 and opacity: 0, 0.08s stagger
-  useCardGridReveal(sectionRef, ".work");
+  useEffect(() => {
+    if (!selectedProject) return undefined;
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") setSelectedProject(null);
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [selectedProject]);
 
   return (
     <section id="projects" ref={sectionRef} className="py-24 bg-[#080808]">
@@ -91,19 +96,19 @@ export default function Projects() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
           <div>
             <p className="text-sm font-semibold uppercase tracking-widest text-[#ff004f] mb-2">
-              Portfolio Showcase
+              Selected projects
             </p>
             <h2 className="text-4xl sm:text-5xl font-extrabold text-white">
-              My <span className="text-[#ff004f]">Work &amp; Projects</span>
+              Things I’ve <span className="text-[#ff668c]">built</span>
             </h2>
-            <div className="w-20 h-1 bg-[#ff004f] mt-4 rounded-full" />
+            <div className="w-16 h-1 bg-[#ff668c] mt-4 rounded-full" />
             <p className="text-[#ababab] text-base mt-4 max-w-xl font-light">
-              Explore my full-stack engineering work through interactive stacked cards or quick list views.
+              A selection of full-stack and AI projects, with a closer look at the problem and how each one works.
             </p>
           </div>
 
           {/* View Mode Toggle Pill */}
-          <div className="hidden sm:inline-flex items-center p-1 bg-[#1a1a1a] border border-white/10 rounded-full self-start md:self-auto shadow-inner">
+          <div className="inline-flex items-center p-1 bg-[#151515] border border-white/10 rounded-full self-start md:self-auto">
             <button
               onClick={() => setViewMode("stack")}
               className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
@@ -113,7 +118,7 @@ export default function Projects() {
               }`}
             >
               <Layers3 size={14} />
-              <span>Stack Cards</span>
+              <span>Cards</span>
             </button>
             <button
               onClick={() => setViewMode("rows")}
@@ -124,14 +129,14 @@ export default function Projects() {
               }`}
             >
               <List size={14} />
-              <span>Rows List</span>
+              <span>List</span>
             </button>
           </div>
         </div>
 
         {/* Dynamic Project Presentation */}
         {viewMode === "stack" ? (
-          <StackedProjectCards
+          <ProjectCards
             projects={PROJECTS}
             onSelectProject={setSelectedProject}
           />
@@ -144,11 +149,12 @@ export default function Projects() {
 
         {/* Modal for In-Depth Project Details */}
         {selectedProject && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
-            <div className="bg-[#181818] border border-[#ff004f]/40 max-w-2xl w-full rounded-2xl p-6 sm:p-8 relative text-left shadow-2xl">
+          <div onMouseDown={(event) => { if (event.target === event.currentTarget) setSelectedProject(null); }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn" role="presentation">
+            <div role="dialog" aria-modal="true" aria-labelledby="project-dialog-title" className="bg-[#181818] border border-white/10 max-w-2xl w-full max-h-[88vh] overflow-y-auto rounded-2xl p-6 sm:p-8 relative text-left shadow-2xl">
               <button
                 onClick={() => setSelectedProject(null)}
-                className="absolute top-5 right-5 text-[#ababab] hover:text-white text-2xl font-bold"
+                aria-label="Close project details"
+                className="absolute top-5 right-5 text-[#ababab] hover:text-white"
               >
                 ✕
               </button>
@@ -156,7 +162,7 @@ export default function Projects() {
               <span className="text-xs font-semibold text-[#ff004f] uppercase tracking-widest">
                 Architecture Breakdown
               </span>
-              <h3 className="text-2xl sm:text-3xl font-bold text-white mt-1 mb-4">
+              <h3 id="project-dialog-title" className="text-2xl sm:text-3xl font-bold text-white mt-1 mb-4">
                 {selectedProject.title}
               </h3>
 
@@ -204,6 +210,11 @@ export default function Projects() {
                 >
                   <Github size={15} /> GitHub Code
                 </a>
+                {selectedProject.demo && (
+                  <a href={selectedProject.demo} target="_blank" rel="noopener noreferrer" className="btn-pink text-xs py-2.5 px-6 font-semibold">
+                    Live Demo
+                  </a>
+                )}
                 <button
                   onClick={() => setSelectedProject(null)}
                   className="btn-pink text-xs py-2.5 px-6 font-semibold"
