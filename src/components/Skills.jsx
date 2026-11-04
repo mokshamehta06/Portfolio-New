@@ -1,9 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { Layout, Server, Database, Wrench, Cpu } from "lucide-react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import SkillPillTicker from "./SkillPillTicker";
+import useCardGridReveal from "../hooks/useCardGridReveal";
 
 const SKILL_CATEGORIES = [
   {
@@ -41,29 +39,13 @@ const SKILL_CATEGORIES = [
 export default function Skills() {
   const sectionRef = useRef(null);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(".service-card", {
-        opacity: 0,
-        y: 45,
-        duration: 0.7,
-        stagger: 0.12,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 75%",
-          toggleActions: "play none none reverse",
-        },
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+  // 60fps Scroll Reveal: start at y:60 and opacity: 0, 0.08s stagger
+  useCardGridReveal(sectionRef, ".service-card");
 
   return (
     <section id="skills" ref={sectionRef} className="py-24 bg-[#080808]">
       <div className="container">
-        <div className="text-center md:text-left mb-14">
+        <div className="text-center md:text-left mb-8">
           <p className="text-sm font-semibold uppercase tracking-widest text-[#ff004f] mb-2">
             Technical Proficiency
           </p>
@@ -73,8 +55,11 @@ export default function Skills() {
           <div className="w-20 h-1 bg-[#ff004f] mt-4 rounded-full" />
         </div>
 
+        {/* Dual-Row Infinite Skill Pill Ticker with Hover Deceleration */}
+        <SkillPillTicker />
+
         {/* Services / Skills Grid (Classic #262626 card that lifts and turns #ff004f on hover) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
           {SKILL_CATEGORIES.map((category, idx) => (
             <div key={idx} className="service-card group cursor-pointer">
               {category.icon}

@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from "react";
-import { ExternalLink, Github, Sparkles, Layers } from "lucide-react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import { useRef, useState } from "react";
+import { ExternalLink, Github, Sparkles, Layers, Layers3, List } from "lucide-react";
+import ProjectRowList from "./ProjectRowList";
+import StackedProjectCards from "./StackedProjectCards";
+import useCardGridReveal from "../hooks/useCardGridReveal";
 
 const PROJECTS = [
   {
@@ -79,104 +78,69 @@ const PROJECTS = [
 export default function Projects() {
   const sectionRef = useRef(null);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [viewMode, setViewMode] = useState("stack"); // "stack" or "rows"
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(".work", {
-        opacity: 0,
-        y: 50,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 75%",
-          toggleActions: "play none none reverse",
-        },
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+  // 60fps Scroll Reveal: start at y:60 and opacity: 0, 0.08s stagger
+  useCardGridReveal(sectionRef, ".work");
 
   return (
     <section id="projects" ref={sectionRef} className="py-24 bg-[#080808]">
       <div className="container">
         {/* Section Heading */}
-        <div className="text-center md:text-left mb-14">
-          <p className="text-sm font-semibold uppercase tracking-widest text-[#ff004f] mb-2">
-            Portfolio Showcase
-          </p>
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-white">
-            My <span className="text-[#ff004f]">Work &amp; Projects</span>
-          </h2>
-          <div className="w-20 h-1 bg-[#ff004f] mt-4 rounded-full" />
-          <p className="text-[#ababab] text-base mt-4 max-w-xl font-light">
-            Hover over any project to inspect problem statements, core architecture, and open-source repositories.
-          </p>
+        {/* Section Heading & View Switcher */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-widest text-[#ff004f] mb-2">
+              Portfolio Showcase
+            </p>
+            <h2 className="text-4xl sm:text-5xl font-extrabold text-white">
+              My <span className="text-[#ff004f]">Work &amp; Projects</span>
+            </h2>
+            <div className="w-20 h-1 bg-[#ff004f] mt-4 rounded-full" />
+            <p className="text-[#ababab] text-base mt-4 max-w-xl font-light">
+              Explore my full-stack engineering work through interactive stacked cards or quick list views.
+            </p>
+          </div>
+
+          {/* View Mode Toggle Pill */}
+          <div className="hidden sm:inline-flex items-center p-1 bg-[#1a1a1a] border border-white/10 rounded-full self-start md:self-auto shadow-inner">
+            <button
+              onClick={() => setViewMode("stack")}
+              className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                viewMode === "stack"
+                  ? "bg-[#ff004f] text-white shadow-[0_2px_12px_rgba(255,0,79,0.4)]"
+                  : "text-[#ababab] hover:text-white"
+              }`}
+            >
+              <Layers3 size={14} />
+              <span>Stack Cards</span>
+            </button>
+            <button
+              onClick={() => setViewMode("rows")}
+              className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                viewMode === "rows"
+                  ? "bg-[#ff004f] text-white shadow-[0_2px_12px_rgba(255,0,79,0.4)]"
+                  : "text-[#ababab] hover:text-white"
+              }`}
+            >
+              <List size={14} />
+              <span>Rows List</span>
+            </button>
+          </div>
         </div>
 
-        {/* Signature Work List Grid with Sliding Layer */}
-        <div className="work-list grid grid-cols-1 md:grid-cols-2 gap-10">
-          {PROJECTS.map((project, idx) => (
-            <div key={idx} className="work group">
-              <img src={project.image} alt={project.title} />
-
-              {/* The Signature Hot Pink Sliding Layer */}
-              <div className="layer">
-                <h3 className="text-2xl font-bold text-white mb-2">{project.title}</h3>
-                <p className="text-xs font-medium text-white/95 max-w-md mb-3 leading-relaxed">
-                  {project.tagline}
-                </p>
-
-                {/* Tech Chips */}
-                <div className="flex flex-wrap justify-center gap-1.5 mb-4 max-w-xs">
-                  {project.tech.map((t, tIdx) => (
-                    <span
-                      key={tIdx}
-                      className="text-[11px] font-semibold bg-black/60 text-white px-2 py-0.5 rounded"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Action Circle Links */}
-                <div className="flex items-center gap-3">
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="circle-link"
-                    title="View GitHub Repository"
-                  >
-                    <Github size={22} />
-                  </a>
-                  {project.demo && (
-                    <a
-                      href={project.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="circle-link"
-                      title="Live Demo"
-                    >
-                      <ExternalLink size={22} />
-                    </a>
-                  )}
-                  {!project.demo && (
-                    <button
-                      onClick={() => setSelectedProject(project)}
-                      className="circle-link"
-                      title="Read Project Architecture Details"
-                    >
-                      <ExternalLink size={22} />
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        {/* Dynamic Project Presentation */}
+        {viewMode === "stack" ? (
+          <StackedProjectCards
+            projects={PROJECTS}
+            onSelectProject={setSelectedProject}
+          />
+        ) : (
+          <ProjectRowList
+            projects={PROJECTS}
+            onSelectProject={setSelectedProject}
+          />
+        )}
 
         {/* Modal for In-Depth Project Details */}
         {selectedProject && (

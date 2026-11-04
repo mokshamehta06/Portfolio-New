@@ -2,6 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { Github, Linkedin, ArrowDown, Download } from "lucide-react";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import MaskedText from "./MaskedText";
+import HeroStickers from "./HeroStickers";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const ROLES = [
   "Full Stack Developer",
@@ -40,7 +46,7 @@ function HeroCard() {
   );
 }
 
-export default function Hero() {
+export default function Hero({ isReady = true }) {
   const [roleText, setRoleText] = useState("");
   const [roleIdx, setRoleIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
@@ -50,6 +56,7 @@ export default function Hero() {
 
   // Typewriter effect
   useEffect(() => {
+    if (!isReady) return;
     const current = ROLES[roleIdx];
     let timer;
 
@@ -71,11 +78,13 @@ export default function Hero() {
     }
 
     return () => clearTimeout(timer);
-  }, [charIdx, isDeleting, roleIdx]);
+  }, [charIdx, isDeleting, roleIdx, isReady]);
 
-  // GSAP Entrance
-  useEffect(() => {
-    const ctx = gsap.context(() => {
+  // GSAP Entrance with useGSAP and context cleanup
+  useGSAP(
+    () => {
+      if (!isReady) return;
+
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
       tl.from(".hero-tagline", { opacity: 0, y: 30, duration: 0.7 })
@@ -83,10 +92,9 @@ export default function Hero() {
         .from(".hero-bio", { opacity: 0, y: 25, duration: 0.6 }, "-=0.3")
         .from(".hero-actions", { opacity: 0, y: 25, duration: 0.6 }, "-=0.3")
         .from(".hero-socials", { opacity: 0, x: -20, duration: 0.5 }, "-=0.2");
-    }, heroRef);
-
-    return () => ctx.revert();
-  }, []);
+    },
+    { scope: heroRef, dependencies: [isReady] }
+  );
 
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -109,15 +117,22 @@ export default function Hero() {
             Third-Year B.Tech CSE Student (7.5 CGPA)
           </p>
 
-          {/* Requested Motion Heading */}
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-tight mb-4"
-          >
-            Hi, I'm <span className="text-pink glow-pink">Moksha Mehta</span>
-          </motion.h1>
+          {/* Headline with Masked Character Slide-Up & Float Stickers */}
+          <div className="relative mb-4">
+            <HeroStickers isReady={isReady} />
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-tight">
+              <MaskedText text="Hi, I'm" delay={0.1} stagger={0.05} isReady={isReady} />{" "}
+              <span className="text-pink glow-pink inline-block">
+                <MaskedText
+                  text="Moksha Mehta"
+                  delay={0.35}
+                  stagger={0.05}
+                  isReady={isReady}
+                  charClassName="text-pink glow-pink"
+                />
+              </span>
+            </h1>
+          </div>
 
           {/* Animated Typewriter Title */}
           <div className="hero-typewriter-box flex items-center text-xl sm:text-3xl font-semibold mb-6 text-white min-h-[44px]">
@@ -134,13 +149,16 @@ export default function Hero() {
             <span className="text-pink font-medium">AI integrations</span>.
           </p>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons with Text Roll & Red Fill Wipes */}
           <div className="hero-actions flex flex-wrap items-center gap-4 mb-8">
             <button
               onClick={() => scrollTo("projects")}
               className="btn-pink filled"
             >
-              View My Work
+              <span className="text-roll">
+                <span>View My Work</span>
+                <span>View My Work</span>
+              </span>
             </button>
             <a
               href="#"
@@ -151,13 +169,19 @@ export default function Hero() {
               className="btn-pink"
             >
               <Download size={16} />
-              Download Resume
+              <span className="text-roll">
+                <span>Download Resume</span>
+                <span>Download Resume</span>
+              </span>
             </a>
             <button
               onClick={() => scrollTo("contact")}
-              className="text-[#ababab] hover:text-pink font-medium text-sm transition-colors ml-2 underline underline-offset-8"
+              className="text-[#ababab] hover:text-pink font-medium text-sm transition-colors ml-2 underline underline-offset-8 group"
             >
-              Let's Connect →
+              <span className="text-roll">
+                <span>Let's Connect →</span>
+                <span className="text-pink">Let's Connect →</span>
+              </span>
             </button>
           </div>
 

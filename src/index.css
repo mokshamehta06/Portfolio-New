@@ -47,7 +47,7 @@ body {
   margin: 0 auto;
 }
 
-/* ── Navigation Links Hover Line ── */
+/* ── Navigation Links Hover Line (Draws in from Left) ── */
 .nav-link {
   color: #fff;
   text-decoration: none;
@@ -55,23 +55,27 @@ body {
   font-weight: 500;
   position: relative;
   transition: color 0.3s;
+  display: inline-block;
 }
 
 .nav-link::after {
   content: '';
-  width: 0;
-  height: 3px;
+  width: 100%;
+  height: 2.5px;
   background: #ff004f;
   position: absolute;
   left: 0;
   bottom: -6px;
-  transition: 0.4s ease;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   border-radius: 2px;
+  will-change: transform;
 }
 
 .nav-link:hover::after,
 .nav-link.active::after {
-  width: 100%;
+  transform: scaleX(1);
 }
 
 .nav-link:hover,
@@ -114,14 +118,43 @@ body {
   background-color: #1a1a1a;
   padding: 35px 30px;
   border-radius: 12px;
-  transition: background 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background 0.4s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  will-change: transform;
 }
 
-.service-card:hover {
-  background-color: #ff004f;
-  transform: translateY(-10px);
-  box-shadow: 0 15px 35px rgba(255, 0, 79, 0.35);
+/* Card 6px Lift & Soft Red Shadow on Hover */
+.service-card:hover,
+.sweep-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(255, 0, 79, 0.28);
+}
+
+/* Thin Red Border Sweep Animation */
+.sweep-card::before,
+.service-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(90deg, transparent 0%, #ff004f 50%, transparent 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  background-size: 200% 100%;
+  background-position: -100% 0;
+  transition: opacity 0.3s ease, background-position 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.sweep-card:hover::before,
+.service-card:hover::before {
+  opacity: 1;
+  background-position: 100% 0;
 }
 
 .service-card:hover h3,
@@ -204,7 +237,7 @@ body {
   color: #ff004f;
 }
 
-/* ── Signature Hot Pink Button ── */
+/* ── Signature Hot Pink Button (Red Fill Wipes in from Bottom) ── */
 .btn-pink {
   display: inline-flex;
   align-items: center;
@@ -219,13 +252,34 @@ body {
   font-weight: 500;
   background: transparent;
   cursor: pointer;
-  transition: background 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  will-change: transform;
+}
+
+/* Red Fill Wiping in from the Bottom */
+.btn-pink::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: #ff004f;
+  transform: scaleY(0);
+  transform-origin: bottom center;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: -1;
+  border-radius: inherit;
+  will-change: transform;
+}
+
+.btn-pink:hover::before {
+  transform: scaleY(1);
 }
 
 .btn-pink:hover {
-  background: #ff004f;
   transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(255, 0, 79, 0.4);
+  box-shadow: 0 10px 25px rgba(255, 0, 79, 0.45);
 }
 
 .btn-pink.filled {
@@ -233,9 +287,56 @@ body {
   box-shadow: 0 8px 20px rgba(255, 0, 79, 0.3);
 }
 
+.btn-pink.filled::before {
+  background-color: #e60046;
+}
+
 .btn-pink.filled:hover {
-  background: #e60046;
-  box-shadow: 0 12px 28px rgba(255, 0, 79, 0.5);
+  box-shadow: 0 12px 28px rgba(255, 0, 79, 0.55);
+}
+
+/* ── Universal Text Roll Hover Effect (Label slides up, identical slides from below) ── */
+.text-roll {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 1.25em;
+  line-height: 1.25em;
+  vertical-align: middle;
+}
+
+.text-roll > span:first-child {
+  display: block;
+  transform: translateY(0);
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.text-roll > span:last-child {
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  transform: translateY(0);
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+/* Trigger text roll on parent button/link/group hover */
+.btn-pink:hover .text-roll > span:first-child,
+.nav-link:hover .text-roll > span:first-child,
+.group:hover .text-roll > span:first-child,
+.roll-trigger:hover .text-roll > span:first-child {
+  transform: translateY(-100%);
+}
+
+.btn-pink:hover .text-roll > span:last-child,
+.nav-link:hover .text-roll > span:last-child,
+.group:hover .text-roll > span:last-child,
+.roll-trigger:hover .text-roll > span:last-child {
+  transform: translateY(-100%);
 }
 
 /* ── Contact Inputs ── */

@@ -1,7 +1,9 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { GraduationCap, Award, Code, Briefcase, Sparkles } from "lucide-react";
+import ScrollScrubText, { ScrubWords, ScrubHighlight } from "./ScrollScrubText";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -9,8 +11,8 @@ export default function About() {
   const [activeTab, setActiveTab] = useState("skills");
   const sectionRef = useRef(null);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
+  useGSAP(
+    () => {
       gsap.from(".about-col-1", {
         opacity: 0,
         x: -50,
@@ -32,10 +34,9 @@ export default function About() {
           toggleActions: "play none none reverse",
         },
       });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+    },
+    { scope: sectionRef }
+  );
 
   return (
     <section id="about" ref={sectionRef} className="py-24 bg-[#080808] text-[#ababab]">
@@ -68,20 +69,40 @@ export default function About() {
               About <span className="text-[#ff004f]">Me</span>
             </h2>
 
-            <p className="text-base sm:text-lg leading-relaxed text-[#c0c0c0] font-light mb-4">
-              I am <strong className="text-white font-semibold">Moksha Mehta</strong>, a third-year{" "}
-              <span className="text-[#ff004f] font-medium">B.Tech Computer Science Engineering student</span>{" "}
-              holding a <strong className="text-white font-semibold">7.5 CGPA</strong>. I am passionate about
-              building production-ready, scalable full-stack web applications and engineering robust backend architectures.
-            </p>
+            {/* ScrollTrigger Word-by-Word Scrub with Red Marker Wipes */}
+            <ScrollScrubText className="space-y-4 mb-6">
+              <p className="text-base sm:text-lg leading-relaxed text-[#c0c0c0] font-light">
+                <ScrubWords text="I am" />
+                <strong className="text-white font-semibold">
+                  <ScrubWords text="Moksha Mehta," />
+                </strong>{" "}
+                <ScrubWords text="a third-year" />
+                <span className="text-[#ff004f] font-medium">
+                  <ScrubWords text="B.Tech Computer Science Engineering student" />
+                </span>{" "}
+                <ScrubWords text="holding a" />
+                <strong className="text-white font-semibold">
+                  <ScrubWords text="7.5 CGPA." />
+                </strong>{" "}
+                <ScrubWords text="I am passionate about building production-ready," />{" "}
+                <ScrubHighlight>scalable web applications</ScrubHighlight>{" "}
+                <ScrubWords text="and engineering robust backend architectures." />
+              </p>
 
-            <p className="text-base leading-relaxed text-[#ababab] font-light mb-6">
-              My core engineering focus spans <strong className="text-white">Full Stack Web Development</strong>,{" "}
-              <strong className="text-white">Backend Engineering &amp; RESTful API Design</strong>,{" "}
-              <strong className="text-white">AI-powered applications</strong>, and rigorous{" "}
-              <strong className="text-white">Data Structures and Algorithms</strong> practice. I love architecting
-              efficient, scalable systems that translate complex challenges into intuitive, high-performance digital experiences.
-            </p>
+              <p className="text-base leading-relaxed text-[#ababab] font-light">
+                <ScrubWords text="My core engineering focus spans" />{" "}
+                <ScrubHighlight>Full Stack Web Development</ScrubHighlight>,{" "}
+                <strong className="text-white">
+                  <ScrubWords text="Backend Engineering & RESTful API Design," />
+                </strong>{" "}
+                <ScrubHighlight>AI-powered applications</ScrubHighlight>,{" "}
+                <ScrubWords text="and rigorous" />{" "}
+                <strong className="text-white">
+                  <ScrubWords text="Data Structures and Algorithms" />
+                </strong>{" "}
+                <ScrubWords text="practice. I love architecting efficient, scalable systems that translate complex challenges into intuitive, high-performance digital experiences." />
+              </p>
+            </ScrollScrubText>
 
             {/* Tab navigation headers with signature #ff004f underline */}
             <div className="flex items-center gap-8 sm:gap-12 mt-6 mb-8 border-b border-white/10 pb-3">
@@ -89,19 +110,28 @@ export default function About() {
                 onClick={() => setActiveTab("skills")}
                 className={`tab-links ${activeTab === "skills" ? "active-link" : ""}`}
               >
-                Core Skills
+                <span className="text-roll">
+                  <span>Core Skills</span>
+                  <span className="text-[#ff004f]">Core Skills</span>
+                </span>
               </button>
               <button
                 onClick={() => setActiveTab("experience")}
                 className={`tab-links ${activeTab === "experience" ? "active-link" : ""}`}
               >
-                Experience
+                <span className="text-roll">
+                  <span>Experience</span>
+                  <span className="text-[#ff004f]">Experience</span>
+                </span>
               </button>
               <button
                 onClick={() => setActiveTab("education")}
                 className={`tab-links ${activeTab === "education" ? "active-link" : ""}`}
               >
-                Education &amp; Honors
+                <span className="text-roll">
+                  <span>Education &amp; Honors</span>
+                  <span className="text-[#ff004f]">Education &amp; Honors</span>
+                </span>
               </button>
             </div>
 

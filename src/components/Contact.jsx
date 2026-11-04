@@ -120,7 +120,10 @@ export default function Contact() {
                 }}
                 className="btn-pink"
               >
-                Download CV
+                <span className="text-roll">
+                  <span>Download CV</span>
+                  <span>Download CV</span>
+                </span>
               </a>
             </div>
           </div>
@@ -168,7 +171,10 @@ export default function Contact() {
                 type="submit"
                 className="btn-pink filled py-3.5 px-12 text-base font-semibold cursor-pointer"
               >
-                Submit Message
+                <span className="text-roll">
+                  <span>Submit Message</span>
+                  <span>Submit Message</span>
+                </span>
               </button>
 
               {statusMsg && (

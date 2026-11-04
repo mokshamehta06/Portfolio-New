@@ -80,21 +80,27 @@ export default function Navbar() {
                   onClick={(e) => handleNavClick(e, href)}
                   className={`nav-link ${isActive ? "active" : ""}`}
                 >
-                  {label}
+                  <span className="text-roll">
+                    <span>{label}</span>
+                    <span>{label}</span>
+                  </span>
                 </a>
               </li>
             );
           })}
         </ul>
 
-        {/* Action Button (Desktop) */}
+        {/* Action Button (Desktop) with Text Roll & Red Fill Wipe */}
         <div className="hidden md:block">
           <a
             href="#contact"
             onClick={(e) => handleNavClick(e, "#contact")}
             className="btn-pink text-xs uppercase tracking-wider py-2.5 px-6 font-semibold"
           >
-            Let's Talk
+            <span className="text-roll">
+              <span>Let's Talk</span>
+              <span>Let's Talk</span>
+            </span>
           </a>
         </div>
 
