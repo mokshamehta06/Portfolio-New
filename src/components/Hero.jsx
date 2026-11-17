@@ -21,16 +21,9 @@ function HeroCard() {
     <div className="hero-card relative rounded-2xl overflow-hidden bg-[#161616] border-2 border-[#ff0055]/50 w-[300px] sm:w-[350px] shadow-2xl">
       <div className="relative w-full h-[430px] sm:h-[480px] overflow-hidden bg-[#161616]">
         <img
-          src="/image.png"
+          src="/profile.jpg"
           alt="Moksha Mehta"
-          className="absolute h-[132%] max-w-none transition-transform duration-700 hover:scale-105 block"
-          style={{
-            left: "-14%",
-            top: "-12%",
-            width: "295%",
-            objectFit: "contain",
-            objectPosition: "left top",
-          }}
+          className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105 block"
         />
       </div>
 
